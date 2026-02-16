@@ -1,26 +1,35 @@
-using NUnit.Framework;
-
 namespace LibraryManagementSystem.Tests;
+
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using LibraryManagementSystem.App.Services;
 
 [TestFixture]
 public class TestGetMemberById
 {
-    [Test]
-    public void TestGetMemberById()
+    private LibraryService _libraryService = null!;
+
+    [SetUp]
+    public void Setup()
     {
-        var system = new LibraryManagementSystem();
-        var id = Guid.NewGuid();
-        system.AddMember("John Doe", id);
-        var member = system.GetMemberById(id);
-        Assert.IsNotNull(member);
-        Assert.AreEqual(id, member.Id);
+        _libraryService = new LibraryService();
     }
 
     [Test]
-    public void TestGetMemberByIdNotFound()
+    public void GetMemberById_ShouldReturnMember()
     {
-        var system = new LibraryManagementSystem();
-        var member = system.GetMemberById(2);
-        Assert.IsNull(member);
+        var id = Guid.NewGuid();
+        _libraryService.RegisterMember("John Doe",Guid.NewGuid());
+        var member = _libraryService.GetMemberById(id);
+        ClassicAssert.IsNotNull(member);
+        ClassicAssert.AreEqual(id, member?.Id);
+    }
+
+    [Test]
+    public void GetMemberById_ShouldReturnNullIfMemberDoesNotExist ()
+    {
+        var id = Guid.NewGuid();
+        var member = _libraryService.GetMemberById(id);
+        ClassicAssert.IsNull(member);
     }
 }

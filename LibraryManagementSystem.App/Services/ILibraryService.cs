@@ -5,14 +5,14 @@ namespace LibraryManagementSystem.App.Services;
 public interface ILibraryService
 {
     // Book Management
-    Book AddBook(string title, string author, int copies);
+    public Book AddBook(string title, string author, int copies, Guid id);
     bool RemoveBook(Guid bookId);
     List<Book> GetAllBooks();
     List<Book> SearchBooksByTitle(string title);
     Book? GetBookById(Guid bookId);
 
     // Member Management
-    Member RegisterMember(string name);
+    Member RegisterMember(string name, Guid id);
     List<Member> GetAllMembers();
     Member? GetMemberById(Guid memberId);
     Member? GetMemberByName(string name);

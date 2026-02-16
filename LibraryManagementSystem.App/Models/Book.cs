@@ -9,15 +9,16 @@ public class Book
     public int TotalCopies { get; set; } = 1;
     public int AvailableCopies { get; set; } = 1;
 
-    public Book(string title, string author, int totalCopies)
+    public Book(string title, string author, int totalCopies, Guid id)
     {
         Title = title;
         Author = author;
         TotalCopies = totalCopies;
         AvailableCopies = totalCopies;
+        Id = id;
     }
 
-    public Book(string title, string author)
+    public Book(string title, string author, Guid id)
     {
         Title = title;
         Author = author;

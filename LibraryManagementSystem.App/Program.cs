@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystem.App
+﻿namespace LibraryManagementSystem.App;
 
 class Program
 {

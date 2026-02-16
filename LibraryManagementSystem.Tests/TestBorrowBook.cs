@@ -1,4 +1,9 @@
+namespace LibraryManagementSystem.Tests;
+
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using LibraryManagementSystem.App.Models;
+using LibraryManagementSystem.App.Services;
 
 // public string BorrowBook(Guid memberId, Guid bookId)
 // Steps:
@@ -19,101 +24,103 @@ using NUnit.Framework;
 [TestFixture]
 public class TestBorrowBook
 {
-    [Test]
-    public void TestBorrowBook()
+    private LibraryService _libraryService = null!;
+
+    [SetUp]
+    public void Setup()
     {
-        // Arrange
-        var library = new Library();
-        var member = new Member("John Doe");
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald");
-        library.AddMember(member);
-        library.AddBook(book);
-
-        // Act
-        var result = library.BorrowBook(member.Id, book.Id);
-
-        // Assert
-        Assert.AreEqual("Book borrowed successfully.", result);
+        _libraryService = new LibraryService();
     }
 
     [Test]
-    public void TestBorrowBook_BookNotFound()
+    public void BorrowBook_ShouldBorrowBookSuccessfully()
     {
         // Arrange
-        var library = new Library();
-        var member = new Member("John Doe");
-        library.AddMember(member);
+        var member = new Member("John Doe",Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies, book.Id);
 
         // Act
-        var result = library.BorrowBook(member.Id, Guid.NewGuid());
+        var result = _libraryService.BorrowBook(member.Id, book.Id);
 
         // Assert
-        Assert.AreEqual("Book not found.", result);
+        ClassicAssert.AreEqual("Book borrowed successfully.", result);
     }
 
     [Test]
-    public void TestBorrowBook_NoCopiesAvailable()
+    public void BorrowBook_ShouldReturnBookNotFoundIfBookDoesNotExist()
     {
         // Arrange
-        var library = new Library();
-        var member = new Member("John Doe");
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald");
-        library.AddMember(member);
-        library.AddBook(book);
+        var member = new Member("John Doe",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
 
         // Act
-        library.BorrowBook(member.Id, book.Id);
-        var result = library.BorrowBook(member.Id, book.Id);
+        var result = _libraryService.BorrowBook(member.Id, Guid.NewGuid());
 
         // Assert
-        Assert.AreEqual("No copies available.", result);
+        ClassicAssert.AreEqual("Book not found.", result);
     }
 
     [Test]
-    public void TestBorrowBook_MemberNotFound()
+    public void BorrowBook_ShouldReturnNoCopiesAvailableIfNoCopiesAvailable()
     {
         // Arrange
-        var library = new Library();
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald");
-        library.AddBook(book);
+        var member = new Member("John Doe",Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
-        var result = library.BorrowBook(Guid.NewGuid(), book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
+        var result = _libraryService.BorrowBook(member.Id, book.Id);
 
         // Assert
-        Assert.AreEqual("Member not found.", result);
+        ClassicAssert.AreEqual("No copies available.", result);
     }
 
     [Test]
-    public void TestBorrowBook_BookAlreadyBorrowedByMember()
+    public void BorrowBook_ShouldReturnMemberNotFoundIfMemberDoesNotExist()
     {
         // Arrange
-        var library = new Library();
-        var member = new Member("John Doe");
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald");
-        library.AddMember(member);
-        library.AddBook(book);
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
-        library.BorrowBook(member.Id, book.Id);
-        var result = library.BorrowBook(member.Id, book.Id);
+        var result = _libraryService.BorrowBook(Guid.NewGuid(), book.Id);
 
         // Assert
-        Assert.AreEqual("Book already borrowed by this member.", result);
+        ClassicAssert.AreEqual("Member not found.", result);
     }
 
     [Test]
-    public void TestBorrowBook_BookNotFound()
+    public void BorrowBook_ShouldDisallowBorrowingIfBookAlreadyBorrowedByMember()
     {
         // Arrange
-        var library = new Library();
-        var member = new Member("John Doe");
-        library.AddMember(member);
+        var member = new Member("John Doe",Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
-        var result = library.BorrowBook(member.Id, Guid.NewGuid());
+        _libraryService.BorrowBook(member.Id, book.Id);
+        var result = _libraryService.BorrowBook(member.Id, book.Id);
 
         // Assert
-        Assert.AreEqual("Book not found.", result);
+        ClassicAssert.AreEqual("Book already borrowed by this member.", result);
+    }
+
+    [Test]
+    public void BorrowBook_ShouldNotAllowBorrowingNonExistingBook()
+    {
+        // Arrange
+        var member = new Member("John Doe",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+
+        // Act
+        var result = _libraryService.BorrowBook(member.Id, Guid.NewGuid());
+
+        // Assert
+        ClassicAssert.AreEqual("Book not found.", result);
     }
 }

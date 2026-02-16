@@ -1,4 +1,9 @@
+namespace LibraryManagementSystem.Tests;
+
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using LibraryManagementSystem.App.Models;
+using LibraryManagementSystem.App.Services;
 
 // public Member RegisterMember(string name)
 // Should
@@ -9,31 +14,37 @@ using NUnit.Framework;
 [TestFixture]
 public class TestRegisterMember
 {
-    [Test]
-    public void ShouldCreateMember()
+    private LibraryService _libraryService = null!;
+
+    [SetUp]
+    public void Setup()
     {
-        // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-
-        // Act
-        var result = system.RegisterMember(member,);
-
-        // Assert
-        Assert.AreEqual(member, result);
+        _libraryService = new LibraryService();
     }
 
     [Test]
-    public void ShouldAddMemberToMembers()
+    public void RegisterMember_ShouldCreateMember()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
+        var member = new Member("John",Guid.NewGuid());
 
         // Act
-        var result = system.RegisterMember(member);
+        var result = _libraryService.RegisterMember(member.Name,member.Id);
 
         // Assert
-        Assert.Contains(member, system.Members);
+        ClassicAssert.AreEqual(member, result);
+    }
+
+    [Test]
+    public void RegisterMember_ShouldRegisterMemberToMembers()
+    {
+        // Arrange
+        var member = new Member("John",Guid.NewGuid());
+
+        // Act
+        var result = _libraryService.RegisterMember(member.Name,member.Id);
+
+        // Assert
+        ClassicAssert.Contains(member, _libraryService.GetAllMembers());
     }
 }

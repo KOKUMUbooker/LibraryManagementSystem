@@ -1,6 +1,9 @@
-using NUnit.Framework;
+namespace LibraryManagementSystem.Tests;
 
-namespace LibraryManagementSystem.Tests
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using LibraryManagementSystem.App.Models;
+using LibraryManagementSystem.App.Services;
 
 // public string ReturnBook(Guid memberId, Guid bookId)
 // Steps:
@@ -13,94 +16,96 @@ namespace LibraryManagementSystem.Tests
 [TestFixture]
 public class TestReturnBook
 {
+    private LibraryService _libraryService = null!;
+
+    [SetUp]
+    public void Setup()
+    {
+        _libraryService = new LibraryService();
+    }
+
     [Test]
     public void ReturnBook_WithValidMemberAndBook_ReturnsSuccessMessage()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-        var book = new Book("Title", "Author");
-        system.RegisterMember(member);
-        system.RegisterBook(book);
-        system.BorrowBook(member.Id, book.Id);
+        var member = new Member("John",Guid.NewGuid());
+        var book = new Book("Title", "Author",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
 
         // Act
-        var result = system.ReturnBook(member.Id, book.Id);
+        var result = _libraryService.ReturnBook(member.Id, book.Id);
 
         // Assert
-        Assert.AreEqual("Book returned successfully.", result);
+        ClassicAssert.AreEqual("Book returned successfully.", result);
     }
 
     [Test]
     public void ReturnBook_WithInvalidMember_ReturnsErrorMessage()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-        var book = new Book("Title", "Author");
-        system.RegisterMember(member);
-        system.RegisterBook(book);
-        system.BorrowBook(member.Id, book.Id);
+        var member = new Member("John",Guid.NewGuid());
+        var book = new Book("Title", "Author",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
 
         // Act
-        var result = system.ReturnBook(Guid.NewGuid(), book.Id);
+        var result = _libraryService.ReturnBook(Guid.NewGuid(), book.Id);
 
         // Assert
-        Assert.AreEqual("Member not found.", result);
+        ClassicAssert.AreEqual("Member not found.", result);
     }
 
     [Test]
     public void ReturnBook_WithInvalidBook_ReturnsErrorMessage()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-        var book = new Book("Title", "Author");
-        system.RegisterMember(member);
-        system.RegisterBook(book);
-        system.BorrowBook(member.Id, book.Id);
+        var member = new Member("John",Guid.NewGuid());
+        var book = new Book("Title", "Author",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
 
         // Act
-        var result = system.ReturnBook(member.Id, Guid.NewGuid());
+        var result = _libraryService.ReturnBook(member.Id, Guid.NewGuid());
 
         // Assert
-        Assert.AreEqual("Book not found.", result);
+        ClassicAssert.AreEqual("Book not found.", result);
     }
 
     [Test]
     public void ReturnBook_WithInvalidLoan_ReturnsErrorMessage()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-        var book = new Book("Title", "Author");
-        system.RegisterMember(member);
-        system.RegisterBook(book);
-        system.BorrowBook(member.Id, book.Id);
+        var member = new Member("John",Guid.NewGuid());
+        var book = new Book("Title", "Author",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
 
         // Act
-        var result = system.ReturnBook(Guid.NewGuid(), Guid.NewGuid());
+        var result = _libraryService.ReturnBook(Guid.NewGuid(), Guid.NewGuid());
 
         // Assert
-        Assert.AreEqual("Loan not found.", result);
+        ClassicAssert.AreEqual("Loan not found.", result);
     }
 
-    // Increase AvailableCopies
     [Test]
     public void ReturnBook_IncreasesAvailableCopies()
     {
         // Arrange
-        var system = new LibraryManagementSystem();
-        var member = new Member("John");
-        var book = new Book("Title", "Author");
-        system.RegisterMember(member);
-        system.RegisterBook(book);
-        system.BorrowBook(member.Id, book.Id);
+        var member = new Member("John",Guid.NewGuid());
+        var book = new Book("Title", "Author",Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.BorrowBook(member.Id, book.Id);
 
         // Act
-        system.ReturnBook(member.Id, book.Id);
+        _libraryService.ReturnBook(member.Id, book.Id);
 
         // Assert
-        Assert.AreEqual(1, system.GetBook(book.Id).AvailableCopies);
+        ClassicAssert.AreEqual(1, _libraryService.GetBookById(book.Id)?.AvailableCopies);
     }
 }

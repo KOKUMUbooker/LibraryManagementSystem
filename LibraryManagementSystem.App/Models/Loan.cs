@@ -6,9 +6,9 @@ public class Loan
     public Guid MemberId { get; set; }
     public DateTime BorrowDate { get; set; } = DateTime.UtcNow;
 
-    public Loan(Book book, Member member)
+    public Loan(Guid bookId, Guid memberId)
     {
-        BookId = book.Id;
-        MemberId = member.Id;
+        BookId = bookId;
+        MemberId = memberId;
     }
 }

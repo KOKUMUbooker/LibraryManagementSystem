@@ -1,4 +1,8 @@
+namespace LibraryManagementSystem.Tests;
+
 using NUnit.Framework;
+using LibraryManagementSystem.App.Models;
+using LibraryManagementSystem.App.Services;
 
 // public bool RemoveBook(Guid bookId)
 // Should:
@@ -9,19 +13,28 @@ using NUnit.Framework;
 [TestFixture]
 public class TestRemoveBook
 {
+    private LibraryService _libraryService = null!;
+
+    [SetUp]
+    public void Setup()
+    {
+        _libraryService = new LibraryService();
+    }
+
     [Test]
     public void RemoveBook_ShouldFailIfBookHasActiveLoans()
     {
         // Arrange
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1);
-        var library = new Library();
-        library.AddBook(book);
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1, Guid.NewGuid());
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
-        var loan = new Loan(book, new User("John Doe", "john@example.com"));
-        library.AddLoan(loan);
+        Member member = _libraryService.RegisterMember("John Doe",Guid.NewGuid());
+
+        var loan = new Loan(book.Id, member.Id);
+        _libraryService.BorrowBook(member.Id,book.Id);
 
         // Act
-        var result = library.RemoveBook(book.Id);
+        var result = _libraryService.RemoveBook(book.Id);
 
         // Assert
         Assert.That(result, Is.False);
@@ -31,27 +44,25 @@ public class TestRemoveBook
     public void RemoveBook_ShouldRemoveBookFromList()
     {
         // Arrange
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1);
-        var library = new Library();
-        library.AddBook(book);
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
-        library.RemoveBook(book.Id);
+        _libraryService.RemoveBook(book.Id);
 
         // Assert
-        Assert.That(library.Books, Does.Not.Contain(book));
+        Assert.That(_libraryService.GetAllBooks(), Does.Not.Contain(book));
     }
 
     [Test]
     public void RemoveBook_ShouldReturnTrueIfRemoved()
     {
         // Arrange
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1);
-        var library = new Library();
-        library.AddBook(book);
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
-        var result = library.RemoveBook(book.Id);
+        var result = _libraryService.RemoveBook(book.Id);
 
         // Assert
         Assert.That(result, Is.True);
