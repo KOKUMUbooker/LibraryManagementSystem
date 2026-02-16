@@ -75,9 +75,11 @@ public class LibraryService : ILibraryService
         if (_books.Find(b => b.Id == bookId)!.AvailableCopies == 0) return "No copies available."; // We're sure a book exists
         if (_loans.Any(l => l.MemberId == memberId && l.BookId == bookId)) return "Book already borrowed by this member.";
 
-        var loan = new Loan(memberId, bookId);
+        var loan = new Loan(bookId, memberId);
         _loans.Add(loan);
-        _books.Find(b => b.Id == bookId)!.AvailableCopies--; // We're sure a book exists
+        int targetBookI = _books.FindIndex(b => b.Id == bookId); 
+        if (targetBookI >= 0) _books[targetBookI].AvailableCopies--;
+
         return "Book borrowed successfully.";
     }
 

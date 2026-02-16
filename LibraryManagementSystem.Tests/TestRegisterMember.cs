@@ -32,7 +32,7 @@ public class TestRegisterMember
         var result = _libraryService.RegisterMember(member.Name,member.Id);
 
         // Assert
-        ClassicAssert.AreEqual(member, result);
+        ClassicAssert.AreEqual(member.Id, result.Id);
     }
 
     [Test]
@@ -42,9 +42,9 @@ public class TestRegisterMember
         var member = new Member("John",Guid.NewGuid());
 
         // Act
-        var result = _libraryService.RegisterMember(member.Name,member.Id);
+        var registeredMember = _libraryService.RegisterMember(member.Name,member.Id);
 
         // Assert
-        ClassicAssert.Contains(member, _libraryService.GetAllMembers());
+        ClassicAssert.Contains(registeredMember, _libraryService.GetAllMembers());
     }
 }

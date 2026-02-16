@@ -19,7 +19,7 @@ public class TestGetMemberById
     public void GetMemberById_ShouldReturnMember()
     {
         var id = Guid.NewGuid();
-        _libraryService.RegisterMember("John Doe",Guid.NewGuid());
+        _libraryService.RegisterMember("John Doe",id);
         var member = _libraryService.GetMemberById(id);
         ClassicAssert.IsNotNull(member);
         ClassicAssert.AreEqual(id, member?.Id);

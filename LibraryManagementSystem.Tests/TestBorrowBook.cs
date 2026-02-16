@@ -24,18 +24,11 @@ using LibraryManagementSystem.App.Services;
 [TestFixture]
 public class TestBorrowBook
 {
-    private LibraryService _libraryService = null!;
-
-    [SetUp]
-    public void Setup()
-    {
-        _libraryService = new LibraryService();
-    }
-
     [Test]
     public void BorrowBook_ShouldBorrowBookSuccessfully()
     {
         // Arrange
+        LibraryService _libraryService = new LibraryService();
         var member = new Member("John Doe",Guid.NewGuid());
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
         _libraryService.RegisterMember(member.Name,member.Id);
@@ -52,6 +45,7 @@ public class TestBorrowBook
     public void BorrowBook_ShouldReturnBookNotFoundIfBookDoesNotExist()
     {
         // Arrange
+        LibraryService _libraryService = new LibraryService();
         var member = new Member("John Doe",Guid.NewGuid());
         _libraryService.RegisterMember(member.Name,member.Id);
 
@@ -66,8 +60,9 @@ public class TestBorrowBook
     public void BorrowBook_ShouldReturnNoCopiesAvailableIfNoCopiesAvailable()
     {
         // Arrange
+        LibraryService _libraryService = new LibraryService();
         var member = new Member("John Doe",Guid.NewGuid());
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",1,Guid.NewGuid());
         _libraryService.RegisterMember(member.Name,member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
@@ -83,6 +78,7 @@ public class TestBorrowBook
     public void BorrowBook_ShouldReturnMemberNotFoundIfMemberDoesNotExist()
     {
         // Arrange
+        LibraryService _libraryService = new LibraryService();
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
@@ -94,16 +90,17 @@ public class TestBorrowBook
     }
 
     [Test]
-    public void BorrowBook_ShouldDisallowBorrowingIfBookAlreadyBorrowedByMember()
+    public void BorrowBook_ShouldNotAllowBorrowingIfBookAlreadyBorrowedByMember()
     {
         // Arrange
+        var _libraryService = new LibraryService();
         var member = new Member("John Doe",Guid.NewGuid());
-        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",2, Guid.NewGuid());
         _libraryService.RegisterMember(member.Name,member.Id);
-        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
+        _libraryService.AddBook(book.Title, book.Author, book.TotalCopies, book.Id);
 
         // Act
-        _libraryService.BorrowBook(member.Id, book.Id);
+          _libraryService.BorrowBook(member.Id, book.Id);
         var result = _libraryService.BorrowBook(member.Id, book.Id);
 
         // Assert
@@ -114,6 +111,7 @@ public class TestBorrowBook
     public void BorrowBook_ShouldNotAllowBorrowingNonExistingBook()
     {
         // Arrange
+        LibraryService _libraryService = new LibraryService();
         var member = new Member("John Doe",Guid.NewGuid());
         _libraryService.RegisterMember(member.Name,member.Id);
 

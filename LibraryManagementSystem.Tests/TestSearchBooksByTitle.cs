@@ -26,6 +26,7 @@ public class TestSearchBooksByTitle
     {
         // Arrange
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        _libraryService.AddBook(book.Title, book.Author, book.TotalCopies, book.Id);
  
         // Act
         var result = _libraryService.SearchBooksByTitle("The Great Gatsby");
@@ -40,6 +41,7 @@ public class TestSearchBooksByTitle
     {
         // Arrange
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        _libraryService.AddBook(book.Title, book.Author, book.TotalCopies, book.Id);
 
         // Act
         var result = _libraryService.SearchBooksByTitle("the great gatsby");
@@ -53,14 +55,15 @@ public class TestSearchBooksByTitle
     public void SearchBooksByTitle_ShouldReturnMatchingListForLowercaseQuery()
     {
         // Arrange
-        var book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1,Guid.NewGuid());
+        _libraryService.AddBook(book.Title, book.Author, book.TotalCopies, book.Id);
 
         // Act
         var result = _libraryService.SearchBooksByTitle("gatsby");
 
         // Assert
         ClassicAssert.AreEqual(1, result.Count);
-        ClassicAssert.AreEqual(book1.Id, result[0].Id);
+        ClassicAssert.AreEqual(book.Id, result[0].Id);
     }
 
     [Test]

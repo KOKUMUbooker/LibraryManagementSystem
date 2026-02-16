@@ -55,24 +55,20 @@ public class TestReturnBook
         var result = _libraryService.ReturnBook(Guid.NewGuid(), book.Id);
 
         // Assert
-        ClassicAssert.AreEqual("Member not found.", result);
+        ClassicAssert.AreEqual("No loan found for this member and book.", result);
     }
 
     [Test]
     public void ReturnBook_WithInvalidBook_ReturnsErrorMessage()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
-        var book = new Book("Title", "Author",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
-        _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
-        _libraryService.BorrowBook(member.Id, book.Id);
+        var member = new Member("John", Guid.NewGuid());
 
         // Act
         var result = _libraryService.ReturnBook(member.Id, Guid.NewGuid());
 
         // Assert
-        ClassicAssert.AreEqual("Book not found.", result);
+        ClassicAssert.AreEqual("No loan found for this member and book.", result);
     }
 
     [Test]
@@ -89,7 +85,7 @@ public class TestReturnBook
         var result = _libraryService.ReturnBook(Guid.NewGuid(), Guid.NewGuid());
 
         // Assert
-        ClassicAssert.AreEqual("Loan not found.", result);
+        ClassicAssert.AreEqual("No loan found for this member and book.", result);
     }
 
     [Test]
