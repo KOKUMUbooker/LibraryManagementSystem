@@ -15,6 +15,7 @@ public interface ILibraryService
     Member RegisterMember(string name);
     List<Member> GetAllMembers();
     Member? GetMemberById(Guid memberId);
+    Member? GetMemberByName(string name);
 
     // Borrowing
     string BorrowBook(Guid memberId, Guid bookId);

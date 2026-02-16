@@ -9,4 +9,10 @@ public class Member
     {
         Name = name;
     }
+
+    public Member(string name, Guid id)
+    {
+        Id = id;
+        Name = name;
+    }
 }

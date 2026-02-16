@@ -40,9 +40,27 @@ public class LibraryService : ILibraryService
     };
 
     // Member Methods
-    public Member RegisterMember(string name);
-    public List<Member> GetAllMembers();
-    public Member? GetMemberById(Guid memberId);
+    public Member RegisterMember(string name)
+    {
+        var member = new Member(name);
+        _members.Add(member);
+        return member;
+    }
+
+    public List<Member> GetAllMembers()
+    {
+        return _members.ToList();
+    }
+
+    public Member? GetMemberById(Guid memberId)
+    {
+        return _members.FirstOrDefault(m => m.Id == memberId);
+    }
+
+    public Member? GetMemberByName(string name)
+    {
+        return _members.FirstOrDefault(m => m.Name == name);
+    }
 
     // Borrowing Methods
     public string BorrowBook(Guid memberId, Guid bookId);
