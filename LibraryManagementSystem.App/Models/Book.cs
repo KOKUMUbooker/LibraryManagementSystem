@@ -6,6 +6,22 @@ public class Book
     public string Title { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
 
-    public int TotalCopies { get; set; }
-    public int AvailableCopies { get; set; }
+    public int TotalCopies { get; set; } = 1;
+    public int AvailableCopies { get; set; } = 1;
+
+    public Book(string title, string author, int totalCopies)
+    {
+        Title = title;
+        Author = author;
+        TotalCopies = totalCopies;
+        AvailableCopies = totalCopies;
+    }
+
+    public Book(string title, string author)
+    {
+        Title = title;
+        Author = author;
+        TotalCopies = 1;
+        AvailableCopies = 1;
+    }
 }
