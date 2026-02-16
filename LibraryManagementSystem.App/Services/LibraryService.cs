@@ -2,7 +2,7 @@ namespace LibraryManagementSystem.App.Services;
 
 using LibraryManagementSystem.App.Models;
 
-public class LibraryService
+public class LibraryService : ILibraryService
 {
     private readonly List<Book> _books = new();
     private readonly List<Member> _members = new();
