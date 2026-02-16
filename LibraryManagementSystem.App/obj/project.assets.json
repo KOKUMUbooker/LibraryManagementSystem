@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "/home/boookumu/.nuget/packages/": {}
+    "/home/booker/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
+      "projectUniqueName": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
       "projectName": "LibraryManagementSystem.App",
-      "projectPath": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
-      "packagesPath": "/home/boookumu/.nuget/packages/",
-      "outputPath": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/obj/",
+      "projectPath": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
+      "packagesPath": "/home/booker/.nuget/packages/",
+      "outputPath": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/boookumu/.nuget/NuGet/NuGet.Config"
+        "/home/booker/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/boookumu/.dotnet/sdk/8.0.417/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.415/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

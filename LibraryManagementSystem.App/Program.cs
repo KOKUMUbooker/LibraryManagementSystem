@@ -1,10 +1,13 @@
-﻿namespace LibraryManagementSystem.App;
+﻿using LibraryManagementSystem.App.Services;
+
+namespace LibraryManagementSystem.App;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // See https://aka.ms/new-console-template for more information
-        Console.WriteLine("Hello, World!");
+        var service = new LibraryService();
+        var ui = new ConsoleUI(service);
+        ui.Run();
     }
 }
