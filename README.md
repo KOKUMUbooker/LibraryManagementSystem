@@ -2,6 +2,11 @@
 ## Description
 - This is a library management system written in C# using .NET Core and NUnit with a focus on Test Driven Development (TDD).
 
+## TDD Steps
+1. RED - Tests must fail
+2. GREEN - Tests must pass with minimal code as possible
+3. REFACTOR - Refactor code such that all tests pass and the code is readable and maintainable
+
 ## Project info
 ### Iteration 1: Add Books and Retrieve Information
 In this iteration, the focus is on creating a basic library management system that allows users to add books to the library and retrieve information about the books including the title, author and ISBN
