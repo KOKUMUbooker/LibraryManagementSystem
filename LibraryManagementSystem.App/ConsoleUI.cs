@@ -8,6 +8,7 @@ public class ConsoleUI
     public ConsoleUI(ILibraryService service)
     {
         _service = service;
+        _service.SeedData(); // Seed data
     }
 
     public void Run()
@@ -112,7 +113,7 @@ public class ConsoleUI
 
         foreach (var book in books)
         {
-            Console.WriteLine($"ID: {book.Id}");
+            // Console.WriteLine($"ID: {book.Id}");
             Console.WriteLine($"Title: {book.Title}");
             Console.WriteLine($"Author: {book.Author}");
             Console.WriteLine($"Available: {book.AvailableCopies}/{book.TotalCopies}");
@@ -138,7 +139,7 @@ public class ConsoleUI
 
         foreach (var book in results)
         {
-            Console.WriteLine($"ID: {book.Id}");
+            // Console.WriteLine($"ID: {book.Id}");
             Console.WriteLine($"Title: {book.Title}");
             Console.WriteLine($"Author: {book.Author}");
             Console.WriteLine($"Available: {book.AvailableCopies}/{book.TotalCopies}");

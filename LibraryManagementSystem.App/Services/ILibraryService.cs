@@ -22,4 +22,5 @@ public interface ILibraryService
     string BorrowBook(Guid memberId, Guid bookId);
     string ReturnBook(Guid memberId, Guid bookId);
     List<Loan> GetAllLoans();
+    void SeedData();
 }

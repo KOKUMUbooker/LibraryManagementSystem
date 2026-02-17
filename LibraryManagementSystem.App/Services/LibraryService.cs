@@ -105,4 +105,38 @@ public class LibraryService : ILibraryService
         return _loans.ToList();
     }
 
+
+    public void SeedData()
+    {
+        // ===== BOOKS =====
+        var book1 = new Book("Clean Code", "Robert C. Martin", 3, Guid.NewGuid());
+        var book2 = new Book("The Pragmatic Programmer", "Andrew Hunt", 2, Guid.NewGuid());
+        var book3 = new Book("Design Patterns", "Erich Gamma", 4, Guid.NewGuid());
+        var book4 = new Book("Domain-Driven Design", "Eric Evans", 1, Guid.NewGuid());
+        var book5 = new Book("Refactoring", "Martin Fowler", 2, Guid.NewGuid());
+
+        _books.AddRange(new[] { book1, book2, book3, book4, book5 });
+
+        // ===== MEMBERS =====
+        var member1 = new Member("Alice Johnson", "alice@example.com", Guid.NewGuid());
+        var member2 = new Member("Bob Smith", "bob@example.com", Guid.NewGuid());
+        var member3 = new Member("Charlie Brown", "charlie@example.com", Guid.NewGuid());
+        var member4 = new Member("Diana Prince", "diana@example.com", Guid.NewGuid());
+        var member5 = new Member("Ethan Clark", "ethan@example.com", Guid.NewGuid());
+
+        _members.AddRange(new[] { member1, member2, member3, member4, member5 });
+
+        // ===== LOANS =====
+        // Alice borrows Clean Code
+        _loans.Add(new Loan(book1.Id, member1.Email, member1.Id));
+        book1.AvailableCopies--;
+
+        // Bob borrows Design Patterns
+        _loans.Add(new Loan(book3.Id, member2.Email, member2.Id));
+        book3.AvailableCopies--;
+
+        // Charlie borrows The Pragmatic Programmer
+        _loans.Add(new Loan(book2.Id, member3.Email, member3.Id));
+        book2.AvailableCopies--;
+    }
 }
