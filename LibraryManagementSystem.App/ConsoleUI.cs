@@ -202,9 +202,20 @@ public class ConsoleUI
         Console.Write("Enter member name: ");
         var name = Console.ReadLine() ?? "";
 
-        var member = _service.RegisterMember(name, Guid.NewGuid());
+        Console.Write("Enter member email: ");
+        var email = Console.ReadLine() ?? "";
 
-        Pause($"Member registered successfully. ID: {member.Id}");
+        var emailExists = _service.GetMemberByEmail(email);
+        if (emailExists != null)
+        {
+            Pause($"Email : {email} already taken");
+        }
+        else
+        {
+            var member = _service.RegisterMember(name, email, Guid.NewGuid());
+
+            Pause($"Member registered successfully. ID: {member.Id}");
+        }
     }
 
     private void ViewAllMembers()
@@ -222,6 +233,7 @@ public class ConsoleUI
         {
             Console.WriteLine($"ID: {member.Id}");
             Console.WriteLine($"Name: {member.Name}");
+            Console.WriteLine($"Email: {member.Email}");
             Console.WriteLine("-----------------------------------");
         }
 
@@ -330,8 +342,7 @@ public class ConsoleUI
 
     private void Pause(string? message = null)
     {
-        if (!string.IsNullOrWhiteSpace(message))
-            Console.WriteLine(message);
+        if (!string.IsNullOrWhiteSpace(message)) Console.WriteLine(message);
 
         Console.WriteLine();
         Console.WriteLine("Press any key to continue...");

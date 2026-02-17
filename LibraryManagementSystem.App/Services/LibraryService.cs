@@ -45,9 +45,9 @@ public class LibraryService : ILibraryService
     }
 
     // Member Methods
-    public Member RegisterMember(string name, Guid id)
+    public Member RegisterMember(string name, string email,Guid id)
     {
-        var member = new Member(name,id);
+        var member = new Member(name, email, id);
         _members.Add(member);
         return member;
     }
@@ -65,6 +65,11 @@ public class LibraryService : ILibraryService
     public Member? GetMemberByName(string name)
     {
         return _members.FirstOrDefault(m => m.Name == name);
+    }
+
+    public Member? GetMemberByEmail(string email)
+    {
+        return _members.FirstOrDefault(m => m.Email == email);
     }
 
     // Borrowing Methods

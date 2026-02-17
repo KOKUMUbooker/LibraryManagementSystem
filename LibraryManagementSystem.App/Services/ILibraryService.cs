@@ -12,10 +12,11 @@ public interface ILibraryService
     Book? GetBookById(Guid bookId);
 
     // Member Management
-    Member RegisterMember(string name, Guid id);
+    Member RegisterMember(string name, string email, Guid id);
     List<Member> GetAllMembers();
     Member? GetMemberById(Guid memberId);
     Member? GetMemberByName(string name);
+    Member? GetMemberByEmail(string email);
 
     // Borrowing
     string BorrowBook(Guid memberId, Guid bookId);
