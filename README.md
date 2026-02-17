@@ -4,6 +4,10 @@
 
 - This is a library management system written in C# using .NET Core and NUnit with a focus on Test Driven Development (TDD).
 
+## Demo
+
+<img src="demo-screen-shot.png">
+
 ## TDD Steps
 
 1. RED - Tests must fail
