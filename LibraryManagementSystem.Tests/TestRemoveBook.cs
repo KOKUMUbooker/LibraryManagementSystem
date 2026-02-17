@@ -28,9 +28,9 @@ public class TestRemoveBook
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald", 1, Guid.NewGuid());
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
-        Member member = _libraryService.RegisterMember("John Doe",Guid.NewGuid());
+        Member member = _libraryService.RegisterMember("John Doe","jdoe@gmail.com", Guid.NewGuid());
 
-        var loan = new Loan(book.Id, member.Id);
+        var loan = new Loan(book.Id, member.Email,member.Id);
         _libraryService.BorrowBook(member.Id,book.Id);
 
         // Act

@@ -28,9 +28,9 @@ public class TestReturnBook
     public void ReturnBook_WithValidMemberAndBook_ReturnsSuccessMessage()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John","jdoe@gmail.com", Guid.NewGuid());
         var book = new Book("Title", "Author",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
         _libraryService.BorrowBook(member.Id, book.Id);
 
@@ -45,9 +45,9 @@ public class TestReturnBook
     public void ReturnBook_WithInvalidMember_ReturnsErrorMessage()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John","jdoe@gmail.com",Guid.NewGuid());
         var book = new Book("Title", "Author",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
         _libraryService.BorrowBook(member.Id, book.Id);
 
@@ -62,7 +62,8 @@ public class TestReturnBook
     public void ReturnBook_WithInvalidBook_ReturnsErrorMessage()
     {
         // Arrange
-        var member = new Member("John", Guid.NewGuid());
+        var member = new Member("John", "jdoe@gmail.com", Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name,member.Email,member.Id);
 
         // Act
         var result = _libraryService.ReturnBook(member.Id, Guid.NewGuid());
@@ -75,9 +76,9 @@ public class TestReturnBook
     public void ReturnBook_WithInvalidLoan_ReturnsErrorMessage()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John","jdoe@gmail.com", Guid.NewGuid());
         var book = new Book("Title", "Author",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
         _libraryService.BorrowBook(member.Id, book.Id);
 
@@ -92,9 +93,9 @@ public class TestReturnBook
     public void ReturnBook_IncreasesAvailableCopies()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John", "jdoe@gmail.com", Guid.NewGuid());
         var book = new Book("Title", "Author",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, "jdoe@gmail.com", member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
         _libraryService.BorrowBook(member.Id, book.Id);
 

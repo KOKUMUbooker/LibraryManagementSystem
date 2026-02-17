@@ -29,9 +29,9 @@ public class TestBorrowBook
     {
         // Arrange
         LibraryService _libraryService = new LibraryService();
-        var member = new Member("John Doe",Guid.NewGuid());
+        var member = new Member("John Doe","jdoe@gmail.com",Guid.NewGuid());
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email ,member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies, book.Id);
 
         // Act
@@ -46,8 +46,8 @@ public class TestBorrowBook
     {
         // Arrange
         LibraryService _libraryService = new LibraryService();
-        var member = new Member("John Doe",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        var member = new Member("John Doe", "jdoe@gmail.com", Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
 
         // Act
         var result = _libraryService.BorrowBook(member.Id, Guid.NewGuid());
@@ -61,9 +61,9 @@ public class TestBorrowBook
     {
         // Arrange
         LibraryService _libraryService = new LibraryService();
-        var member = new Member("John Doe",Guid.NewGuid());
+        var member = new Member("John Doe", "jdoe@gmail.com", Guid.NewGuid());
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",1,Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
         _libraryService.AddBook(book.Title,book.Author,book.TotalCopies,book.Id);
 
         // Act
@@ -94,9 +94,9 @@ public class TestBorrowBook
     {
         // Arrange
         var _libraryService = new LibraryService();
-        var member = new Member("John Doe",Guid.NewGuid());
+        var member = new Member("John Doe","jdoe@gmail.com",Guid.NewGuid());
         var book = new Book("The Great Gatsby", "F. Scott Fitzgerald",2, Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
         _libraryService.AddBook(book.Title, book.Author, book.TotalCopies, book.Id);
 
         // Act
@@ -112,8 +112,8 @@ public class TestBorrowBook
     {
         // Arrange
         LibraryService _libraryService = new LibraryService();
-        var member = new Member("John Doe",Guid.NewGuid());
-        _libraryService.RegisterMember(member.Name,member.Id);
+        var member = new Member("John Doe", "jdoe@gmail", Guid.NewGuid());
+        _libraryService.RegisterMember(member.Name, member.Email, member.Id);
 
         // Act
         var result = _libraryService.BorrowBook(member.Id, Guid.NewGuid());

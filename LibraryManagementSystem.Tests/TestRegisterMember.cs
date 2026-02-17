@@ -26,10 +26,10 @@ public class TestRegisterMember
     public void RegisterMember_ShouldCreateMember()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John", "jdoe@gmail.com", Guid.NewGuid());
 
         // Act
-        var result = _libraryService.RegisterMember(member.Name,member.Id);
+        var result = _libraryService.RegisterMember(member.Name, member.Email, member.Id);
 
         // Assert
         ClassicAssert.AreEqual(member.Id, result.Id);
@@ -39,10 +39,10 @@ public class TestRegisterMember
     public void RegisterMember_ShouldRegisterMemberToMembers()
     {
         // Arrange
-        var member = new Member("John",Guid.NewGuid());
+        var member = new Member("John", "jdoe@gmail.com", Guid.NewGuid());
 
         // Act
-        var registeredMember = _libraryService.RegisterMember(member.Name,member.Id);
+        var registeredMember = _libraryService.RegisterMember(member.Name, member.Email,member.Id);
 
         // Assert
         ClassicAssert.Contains(registeredMember, _libraryService.GetAllMembers());

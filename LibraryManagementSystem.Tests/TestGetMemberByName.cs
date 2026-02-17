@@ -19,7 +19,7 @@ public class TestGetMemberByName
     public void GetMemberByName_ShouldReturnMemberForExistingName()
     {
         var name = "Levi Ackerman";
-        _libraryService.RegisterMember(name,Guid.NewGuid());
+        _libraryService.RegisterMember(name,"levi@gmail.com",Guid.NewGuid());
         var member = _libraryService.GetMemberByName(name);
         ClassicAssert.IsNotNull(member);
         ClassicAssert.AreEqual(name, member?.Name);
