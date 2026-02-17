@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj": {}
+    "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj": {}
   },
   "projects": {
-    "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj": {
+    "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
+        "projectUniqueName": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
         "projectName": "LibraryManagementSystem.App",
-        "projectPath": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
-        "packagesPath": "/home/booker/.nuget/packages/",
-        "outputPath": "/home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.App/obj/",
+        "projectPath": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/LibraryManagementSystem.App.csproj",
+        "packagesPath": "/home/boookumu/.nuget/packages/",
+        "outputPath": "/home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.App/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/booker/.nuget/NuGet/NuGet.Config"
+          "/home/boookumu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.415/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/boookumu/.dotnet/sdk/8.0.417/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

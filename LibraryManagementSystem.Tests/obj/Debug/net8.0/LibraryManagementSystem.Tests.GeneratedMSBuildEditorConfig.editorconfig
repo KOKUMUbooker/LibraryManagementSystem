@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = LibraryManagementSystem.Tests
-build_property.ProjectDir = /home/booker/projects/LibraryManagementSystem/LibraryManagementSystem.Tests/
+build_property.ProjectDir = /home/boookumu/projects/LibraryManagementSystem/LibraryManagementSystem.Tests/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
