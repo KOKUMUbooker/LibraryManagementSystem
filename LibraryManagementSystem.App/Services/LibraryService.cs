@@ -52,6 +52,17 @@ public class LibraryService : ILibraryService
         return member;
     }
 
+    public bool RemoveMember(Guid memberId)
+    {
+        var memberI = _members.FindIndex(m => m.Id == memberId);
+        if (memberI >= 0)
+        {
+            _members.RemoveAt(memberI);
+            return true;
+        }
+        return false;
+    }
+
     public List<Member> GetAllMembers()
     {
         return _members.ToList();

@@ -15,6 +15,7 @@ public interface ILibraryService
     Member RegisterMember(string name, string email, Guid id);
     List<Member> GetAllMembers();
     Member? GetMemberById(Guid memberId);
+    bool RemoveMember(Guid memberId);
     Member? GetMemberByName(string name);
     Member? GetMemberByEmail(string email);
 

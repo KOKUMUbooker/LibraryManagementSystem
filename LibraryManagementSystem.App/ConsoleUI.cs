@@ -175,6 +175,7 @@ public class ConsoleUI
             Console.WriteLine("===== Manage Members =====");
             Console.WriteLine("1. Register Member");
             Console.WriteLine("2. View All Members");
+            Console.WriteLine("3. Remove Member");
             Console.WriteLine("0. Back");
             Console.Write("Select option: ");
 
@@ -187,6 +188,9 @@ public class ConsoleUI
                     break;
                 case "2":
                     ViewAllMembers();
+                    break;
+                case "3":
+                    RemoveMember();
                     break;
                 case "0":
                     return;
@@ -239,6 +243,47 @@ public class ConsoleUI
         }
 
         Pause();
+    }
+
+    private void RemoveMember()
+    {
+        Console.Clear();
+        DisplayMembersForSelection();
+        var selectedMember = SelectMember();
+        if (selectedMember != null)
+        {
+            _service.RemoveMember(selectedMember.Id);
+            Pause("Member removed successfully");
+        }
+        else
+        {
+            Pause("Invalid option selected");
+        }
+    }
+
+    public void DisplayMembersForSelection()
+    {
+        var members = _service.GetAllMembers();
+
+        for (int i = 0; i < members.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {members[i].Name} " +
+                $"- {members[i].Email}");
+        }
+    }
+
+    public Member? SelectMember()
+    {
+        var members = _service.GetAllMembers();
+
+        Console.Write("Select member number: ");
+        if (!int.TryParse(Console.ReadLine(), out int selection))
+            return null;
+
+        if (selection < 1 || selection > members.Count)
+            return null;
+
+        return members[selection - 1];
     }
 
     private void LoanMenu()
@@ -367,7 +412,7 @@ public class ConsoleUI
 
         foreach (var loan in loans)
         {
-            Console.WriteLine($"Member ID: {loan.MemberId}");
+            // Console.WriteLine($"Member ID: {loan.MemberId}");
             Console.WriteLine($"Member Email: {loan.MemberEmail}");
             Console.WriteLine($"Book ID: {loan.BookId}");
             Console.WriteLine($"Borrow Date (UTC): {loan.BorrowDate}");
