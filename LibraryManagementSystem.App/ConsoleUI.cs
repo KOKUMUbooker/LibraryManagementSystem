@@ -1,3 +1,4 @@
+using LibraryManagementSystem.App.Models;
 using LibraryManagementSystem.App.Services;
 
 public class ConsoleUI
@@ -278,32 +279,67 @@ public class ConsoleUI
     {
         Console.Clear();
 
-        Console.Write("Enter Member ID: ");
-        if (!Guid.TryParse(Console.ReadLine(), out Guid memberId))
+        Console.Write("Enter Member Email: ");
+        var memeberEmail = Console.ReadLine() ?? "";
+        var member = _service.GetMemberByEmail(memeberEmail);
+        if (member == null)
         {
-            Pause("Invalid Member ID.");
+            Pause($"No member found with the email {memeberEmail}");
             return;
         }
 
-        Console.Write("Enter Book ID: ");
-        if (!Guid.TryParse(Console.ReadLine(), out Guid bookId))
+        DisplayBooksForSelection();
+        var selectedBook = SelectBook();
+
+        if (selectedBook != null)
         {
-            Pause("Invalid Book ID.");
+            var result = _service.BorrowBook(member.Id, selectedBook.Id);
+
+            Pause(result);
+        } 
+        else
+        {
+            Pause("Invalid book option provided");
             return;
         }
+    }
 
-        var result = _service.BorrowBook(memberId, bookId);
-        Pause(result);
+    public void DisplayBooksForSelection()
+    {
+        var books = _service.GetAllBooks();
+
+        for (int i = 0; i < books.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {books[i].Title} " +
+                $"({books[i].AvailableCopies} copies)");
+        }
+    }
+
+
+    public Book? SelectBook()
+    {
+        var books = _service.GetAllBooks();
+
+        Console.Write("Select book number: ");
+        if (!int.TryParse(Console.ReadLine(), out int selection))
+            return null;
+
+        if (selection < 1 || selection > books.Count)
+            return null;
+
+        return books[selection - 1];
     }
 
     private void ReturnBook()
     {
         Console.Clear();
 
-        Console.Write("Enter Member ID: ");
-        if (!Guid.TryParse(Console.ReadLine(), out Guid memberId))
+        Console.Write("Enter Member Email: ");
+        var memeberEmail = Console.ReadLine() ?? "";
+        var member = _service.GetMemberByEmail(memeberEmail);
+        if (member == null)
         {
-            Pause("Invalid Member ID.");
+            Pause($"No member found with the email {memeberEmail}");
             return;
         }
 
@@ -314,7 +350,7 @@ public class ConsoleUI
             return;
         }
 
-        var result = _service.ReturnBook(memberId, bookId);
+        var result = _service.ReturnBook(member.Id, bookId);
         Pause(result);
     }
     
@@ -332,6 +368,7 @@ public class ConsoleUI
         foreach (var loan in loans)
         {
             Console.WriteLine($"Member ID: {loan.MemberId}");
+            Console.WriteLine($"Member Email: {loan.MemberEmail}");
             Console.WriteLine($"Book ID: {loan.BookId}");
             Console.WriteLine($"Borrow Date (UTC): {loan.BorrowDate}");
             Console.WriteLine("-----------------------------------");

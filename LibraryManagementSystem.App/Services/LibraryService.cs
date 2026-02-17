@@ -75,12 +75,13 @@ public class LibraryService : ILibraryService
     // Borrowing Methods
     public string BorrowBook(Guid memberId, Guid bookId)
     {
-        if (_members.Find(m => m.Id == memberId) == null) return "Member not found.";
+        var member = _members.FirstOrDefault(m => m.Id == memberId);
+        if (member == null) return "Member not found.";
         if (_books.Find(b => b.Id == bookId) == null) return "Book not found.";
         if (_books.Find(b => b.Id == bookId)!.AvailableCopies == 0) return "No copies available."; // We're sure a book exists
         if (_loans.Any(l => l.MemberId == memberId && l.BookId == bookId)) return "Book already borrowed by this member.";
 
-        var loan = new Loan(bookId, memberId);
+        var loan = new Loan(bookId, member.Email, memberId);
         _loans.Add(loan);
         int targetBookI = _books.FindIndex(b => b.Id == bookId); 
         if (targetBookI >= 0) _books[targetBookI].AvailableCopies--;
@@ -103,4 +104,5 @@ public class LibraryService : ILibraryService
     {
         return _loans.ToList();
     }
+
 }
