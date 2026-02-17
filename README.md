@@ -14,16 +14,16 @@
 
 ### Features
 
-1.Add Book
-2.List Books
-3.Search Book
-4.Remove Book
-5.Register Member
-6.List Members
-7.Borrow Book
-8.Return Book
-9.Show Borrowed Books
-10.Show Member's Borrowed Books
+1. Add Book
+2. List Books
+3. Search Book
+4. Remove Book
+5. Register Member
+6. List Members
+7. Borrow Book
+8. Return Book
+9. Show Borrowed Books
+10. Show Member's Borrowed Books
 
 ## Steps to re-create project
 
