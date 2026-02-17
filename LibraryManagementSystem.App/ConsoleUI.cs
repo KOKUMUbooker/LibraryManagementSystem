@@ -152,20 +152,19 @@ public class ConsoleUI
     private void RemoveBook()
     {
         Console.Clear();
-        Console.Write("Enter Book ID to remove: ");
 
-        if (!Guid.TryParse(Console.ReadLine(), out Guid bookId))
+        DisplayBooksForSelection();
+        var selectedBook = SelectBook();
+
+        if (selectedBook != null)
         {
-            Pause("Invalid GUID format.");
-            return;
-        }
-
-        var success = _service.RemoveBook(bookId);
-
-        if (success)
+            _service.RemoveBook(selectedBook.Id);
             Pause("Book removed successfully.");
+        } 
         else
-            Pause("Book not found.");
+        {
+            Pause("Invalid option selected");
+        }
     }
 
     private void ManageMembersMenu()
